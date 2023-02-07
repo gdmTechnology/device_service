@@ -31,6 +31,8 @@ class LogRepositorySpy implements LogRepository {
     async logError(stack: string): Promise<void> {
         this.stack = stack
     }
+
+    async getAllLogs(): Promise<any> { }
 }
 
 const makeSut = (): SutTypes => {
