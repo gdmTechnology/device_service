@@ -18,6 +18,6 @@ export namespace CreateDevice {
         deviceName: string
         deviceType: string
         createdAt: Date
-        updated: Date
+        updatedAt: Date
     }
 }
