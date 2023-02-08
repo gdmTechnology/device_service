@@ -1,51 +1,36 @@
 import { Controller } from '@/presentation/protocols/controller'
-import { EmailInUseError } from '@/presentation/errors'
-import { AddAccount, Authentication } from '@/domain/usecases'
-import { badRequest, serverError, forbidden, ok } from '../helpers/http.helper'
+import { CreateDevice } from '@/domain/usecases'
+import { badRequest, serverError, ok } from '../helpers/http.helper'
 import { Validation } from '../protocols/validation'
 
-export class SignUpController implements Controller {
+export class CreateDeviceController implements Controller {
     constructor(
         private readonly validation: Validation,
-        private readonly addAccount: AddAccount,
-        private readonly authentication: Authentication
+        private readonly createDevice: CreateDevice
     ) { }
 
-    async handle(data: SignUpController.Request): Promise<any> {
+    async handle(data: CreateDeviceController.Request): Promise<any> {
         try {
             const error = this.validation.validate(data)
             if (error) {
                 return badRequest(error)
             }
-            const { passwordConfirmation, ...newAccount } = data
-            const isValid = await this.addAccount.handle(newAccount)
-            if (!isValid) {
-                return forbidden(new EmailInUseError())
+            const device = await this.createDevice.handle(data)
+            if (device.isError()) {
+                return badRequest(device.value.details)
             }
-            const { email, password } = data
-            const auth = await this.authentication.handle({ email, password })
-            return ok(auth)
+            return ok(device.value)
         } catch (error) {
             return serverError(error)
         }
     }
 }
 
-export namespace SignUpController {
+export namespace CreateDeviceController {
     export interface Request {
-        email: string
-        password: string
-        passwordConfirmation: string
-        identification: string
-        name: string
-        lastName: string
-        birthDate: Date
-        tellphone: string
-        cellphone: string
-        streetAddress: string
-        numberAddress: string
-        districtAddress: string
-        cityAddress: string
-        stateAddress: string
+        accountId: string
+        deviceTenantId: string
+        deviceName: string
+        deviceType: string
     }
 }
