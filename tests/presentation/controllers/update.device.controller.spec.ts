@@ -65,7 +65,7 @@ describe('UpdateDeviceController', () => {
         const appError: ApplicationError = new ApplicationError('', '')
         updateDeviceSpy.result = error(appError)
         const httpResponse = await sut.handle(request)
-        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.statusCode).toBe(403)
     })
 
     test('Should return 500 if updateDevice throws', async () => {
