@@ -31,7 +31,7 @@ export namespace UpdateDeviceController {
     export interface Request {
         accountId: string
         deviceIdentification: string
-        deviceName?: string
-        deviceType?: string
+        deviceName: string
+        deviceType: string
     }
 }

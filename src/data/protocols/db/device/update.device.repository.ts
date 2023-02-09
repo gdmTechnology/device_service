@@ -8,8 +8,8 @@ export namespace UpdateDeviceRepository {
     export type Params = {
         accountId: string
         deviceIdentification: string
-        deviceName?: string
-        deviceType?: string
+        deviceName: string
+        deviceType: string
     }
     export type Result = UpdateDevice.Result | null
 }

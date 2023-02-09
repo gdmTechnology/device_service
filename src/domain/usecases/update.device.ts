@@ -8,8 +8,8 @@ export namespace UpdateDevice {
     export type Request = {
         accountId: string
         deviceIdentification: string
-        deviceName?: string
-        deviceType?: string
+        deviceName: string
+        deviceType: string
     }
     export type Result = {
         accountId: string
