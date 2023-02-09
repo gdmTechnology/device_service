@@ -26,7 +26,7 @@ const mockRequest = (): CreateDevice.Request => ({
     deviceType: 'deviceType'
 })
 
-describe('DbCreateSensor', () => {
+describe('DbCreateDevice', () => {
     test('Should throw if CreateUuid throws', async () => {
         const { sut, createUuidSpy } = makeSut()
         const request = mockRequest()
