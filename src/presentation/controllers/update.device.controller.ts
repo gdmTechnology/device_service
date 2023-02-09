@@ -1,6 +1,6 @@
 import { Controller } from '@/presentation/protocols/controller'
 import { UpdateDevice } from '@/domain/usecases'
-import { badRequest, serverError, ok } from '../helpers/http.helper'
+import { badRequest, serverError, ok, forbidden } from '../helpers/http.helper'
 import { Validation } from '../protocols/validation'
 import { HttpResponse } from '../protocols'
 
@@ -18,7 +18,7 @@ export class UpdateDeviceController implements Controller {
             }
             const device = await this.updateDevice.handle(data)
             if (device.isError()) {
-                return badRequest(device.value.details)
+                return forbidden(device.value.details)
             }
             return ok(device.value)
         } catch (error) {

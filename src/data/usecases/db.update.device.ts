@@ -12,8 +12,8 @@ export class DbUpdateDevice implements UpdateDevice {
         const device = await this.updateDeviceRepository.update(data)
         if (!device) {
             const appError = new ApplicationError(
-                Constants.DuplicateError.error,
-                Constants.DuplicateError.message
+                Constants.NotFoundDevice.error,
+                Constants.NotFoundDevice
             )
             return error(appError)
         }

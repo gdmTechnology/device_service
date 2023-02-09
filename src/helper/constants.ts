@@ -7,8 +7,8 @@ export const Constants = {
         message: 'Object already exists.',
         code: 11000
     },
-    NotFoundSensor: {
-        error: 'NotFoundSensorError',
-        message: 'Not found sensor identification.'
+    NotFoundDevice: {
+        error: 'NotFoundDeviceError',
+        message: 'Invalid device identification.'
     }
 }
