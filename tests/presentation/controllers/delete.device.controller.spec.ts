@@ -1,6 +1,6 @@
 import { ApplicationError, error } from '@/domain/protocols'
-import { GetDeviceController } from '@/presentation/controllers'
-import { GetDeviceSpy, ValidationSpy } from '../mocks'
+import { DeleteDeviceController } from '@/presentation/controllers'
+import { DeleteDeviceSpy, ValidationSpy } from '../mocks'
 
 const throwError = (): never => {
     throw new Error()
@@ -8,24 +8,24 @@ const throwError = (): never => {
 
 type SutTypes = {
     validationSpy: ValidationSpy
-    getDeviceSpy: GetDeviceSpy
-    sut: GetDeviceController
+    deleteDeviceSpy: DeleteDeviceSpy
+    sut: DeleteDeviceController
 }
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy()
-    const getDeviceSpy = new GetDeviceSpy()
-    const sut = new GetDeviceController(validationSpy, getDeviceSpy)
+    const deleteDeviceSpy = new DeleteDeviceSpy()
+    const sut = new DeleteDeviceController(validationSpy, deleteDeviceSpy)
     return {
         validationSpy,
-        getDeviceSpy,
+        deleteDeviceSpy,
         sut
     }
 }
 
-const mockReq = (): GetDeviceController.Request => ({
+const mockReq = (): DeleteDeviceController.Request => ({
     deviceIdentification: 'deviceIdentification'
 })
-describe('GetDeviceController', () => {
+describe('DeleteDeviceController', () => {
     test('Should call validation with correct values', async () => {
         const { sut, validationSpy } = makeSut()
         const request = mockReq()
@@ -49,26 +49,26 @@ describe('GetDeviceController', () => {
         expect(httpResponse.statusCode).toBe(500)
     })
 
-    test('Should call GetDevice with correct values', async () => {
-        const { sut, getDeviceSpy } = makeSut()
+    test('Should call deleteDevice with correct values', async () => {
+        const { sut, deleteDeviceSpy } = makeSut()
         const request = mockReq()
         await sut.handle(request)
-        expect(getDeviceSpy.input).toEqual(request)
+        expect(deleteDeviceSpy.input).toEqual(request)
     })
 
-    test('Should return 400 if GetDevice fails', async () => {
-        const { sut, getDeviceSpy } = makeSut()
+    test('Should return 400 if deleteDevice fails', async () => {
+        const { sut, deleteDeviceSpy } = makeSut()
         const request = mockReq()
         const appError: ApplicationError = new ApplicationError('', '')
-        getDeviceSpy.result = error(appError)
+        deleteDeviceSpy.result = error(appError)
         const httpResponse = await sut.handle(request)
         expect(httpResponse.statusCode).toBe(400)
     })
 
-    test('Should return 500 if GetDevice throws', async () => {
-        const { sut, getDeviceSpy } = makeSut()
+    test('Should return 500 if deleteDevice throws', async () => {
+        const { sut, deleteDeviceSpy } = makeSut()
         const request = mockReq()
-        jest.spyOn(getDeviceSpy, 'handle').mockImplementationOnce(throwError)
+        jest.spyOn(deleteDeviceSpy, 'handle').mockImplementationOnce(throwError)
         const httpResponse = await sut.handle(request)
         expect(httpResponse.statusCode).toBe(500)
     })
