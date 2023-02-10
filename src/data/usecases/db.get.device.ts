@@ -13,8 +13,8 @@ export class DbGetDevice implements GetDevice {
         const device = await this.getDeviceRepository.get(deviceIdentification)
         if (!device) {
             const appError = new ApplicationError(
-                Constants.DuplicateError.error,
-                Constants.DuplicateError
+                Constants.NotFoundDevice.error,
+                Constants.NotFoundDevice
             )
             return error(appError)
         }
