@@ -1,7 +1,7 @@
-import { CreateDeviceRepository, UpdateDeviceRepository } from '@/data/protocols'
+import { CreateDeviceRepository, UpdateDeviceRepository, GetDeviceRepository } from '@/data/protocols'
 import { DeviceModel } from './models'
 
-export class DeviceMongoRepository implements CreateDeviceRepository, UpdateDeviceRepository {
+export class DeviceMongoRepository implements CreateDeviceRepository, UpdateDeviceRepository, GetDeviceRepository {
     async save(data: CreateDeviceRepository.Params): Promise<CreateDeviceRepository.Result | null> {
         const result = await DeviceModel.create(data)
         if (result.accountId) return result
@@ -16,6 +16,11 @@ export class DeviceMongoRepository implements CreateDeviceRepository, UpdateDevi
         }
         const option = { new: true }
         const device = await DeviceModel.findOneAndUpdate(filter, update, option).lean()
+        return device
+    }
+
+    async get(deviceIdentification: string): Promise<GetDeviceRepository.Result> {
+        const device = await DeviceModel.findOne({ deviceIdentification }).lean()
         return device
     }
 }
