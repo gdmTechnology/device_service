@@ -1,7 +1,10 @@
-import { CreateDeviceRepository, UpdateDeviceRepository, GetDeviceRepository } from '@/data/protocols'
+import { CreateDeviceRepository, UpdateDeviceRepository, GetDeviceRepository, ListDeviceRepository } from '@/data/protocols'
 import { DeviceModel } from './models'
 
-export class DeviceMongoRepository implements CreateDeviceRepository, UpdateDeviceRepository, GetDeviceRepository {
+export class DeviceMongoRepository implements CreateDeviceRepository,
+    UpdateDeviceRepository,
+    GetDeviceRepository,
+    ListDeviceRepository {
     async save(data: CreateDeviceRepository.Params): Promise<CreateDeviceRepository.Result | null> {
         const result = await DeviceModel.create(data)
         if (result.accountId) return result
@@ -21,6 +24,11 @@ export class DeviceMongoRepository implements CreateDeviceRepository, UpdateDevi
 
     async get(deviceIdentification: string): Promise<GetDeviceRepository.Result> {
         const device = await DeviceModel.findOne({ deviceIdentification }).lean()
+        return device
+    }
+
+    async list(deviceTenantId: string): Promise<ListDeviceRepository.Result[]> {
+        const device = await DeviceModel.find({ deviceTenantId }).lean()
         return device
     }
 }
