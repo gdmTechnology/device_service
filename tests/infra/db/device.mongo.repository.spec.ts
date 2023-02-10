@@ -59,8 +59,24 @@ describe('DeviceMongoRepository', () => {
             const sut = makeSut()
             const req = createDeviceParams()
             await sut.save(req)
-            const updatedDvc = await sut.get('invalid_deviceIdentification')
-            expect(updatedDvc).toBeNull()
+            const dvc = await sut.get('invalid_deviceIdentification')
+            expect(dvc).toBeNull()
+        })
+    })
+
+    describe('ListDeviceRepository', () => {
+        test('Should get a list of devices on success', async () => {
+            const sut = makeSut()
+            const req = createDeviceParams()
+            await sut.save(req)
+            const list = await sut.list('deviceTenantId')
+            expect(list.length).toBe(1)
+        })
+
+        test('Should return empty array if devices was not found ', async () => {
+            const sut = makeSut()
+            const list = await sut.list('invalid_deviceIdentification')
+            expect(list.length).toBe(0)
         })
     })
 })
