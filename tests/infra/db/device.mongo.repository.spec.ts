@@ -45,4 +45,22 @@ describe('DeviceMongoRepository', () => {
             expect(updatedDvc).toBeNull()
         })
     })
+
+    describe('GetDeviceRepository', () => {
+        test('Should get a device on success', async () => {
+            const sut = makeSut()
+            const req = createDeviceParams()
+            await sut.save(req)
+            const updatedDvc = await sut.get('deviceIdentification')
+            expect(updatedDvc.deviceIdentification).toBe('deviceIdentification')
+        })
+
+        test('Should return null if device was not found ', async () => {
+            const sut = makeSut()
+            const req = createDeviceParams()
+            await sut.save(req)
+            const updatedDvc = await sut.get('invalid_deviceIdentification')
+            expect(updatedDvc).toBeNull()
+        })
+    })
 })
