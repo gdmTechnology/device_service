@@ -1,7 +1,7 @@
 import { ApplicationError, Either } from '../protocols'
 
 export interface ListDevice {
-    handle: (data: ListDevice.Request) => Promise<Either<ApplicationError, ListDevice.Result>>
+    handle: (data: ListDevice.Request) => Promise<Either<ApplicationError, ListDevice.Result[]>>
 }
 
 export namespace ListDevice {
