@@ -79,4 +79,20 @@ describe('DeviceMongoRepository', () => {
             expect(list.length).toBe(0)
         })
     })
+
+    describe('DeleteDeviceRepository', () => {
+        test('Should return true if deleted devices succeds', async () => {
+            const sut = makeSut()
+            const req = createDeviceParams()
+            await sut.save(req)
+            const dvc = await sut.list('deviceIdentification')
+            expect(dvc).toBeTruthy()
+        })
+
+        test('Should return false if deleted devices fails', async () => {
+            const sut = makeSut()
+            const dvc = await sut.delete('invalid_deviceIdentification')
+            expect(dvc).toBeFalsy()
+        })
+    })
 })
