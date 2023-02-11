@@ -29,7 +29,7 @@ describe('DbDeleteDevice', () => {
         expect(deleteDeviceRepositorySpy.params).toEqual(request.deviceIdentification)
     })
 
-    test('Should return sensor if DeleteDeviceRepository succeds', async () => {
+    test('Should return true if DeleteDeviceRepository succeds', async () => {
         const { sut } = makeSut()
         const request = mockRequest()
         const result = await sut.handle(request)
