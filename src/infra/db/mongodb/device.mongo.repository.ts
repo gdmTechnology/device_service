@@ -39,8 +39,8 @@ export class DeviceMongoRepository implements CreateDeviceRepository,
         return device
     }
 
-    async delete(deviceTenantId: string): Promise<boolean> {
-        const filter = { deviceTenantId }
+    async delete(deviceIdentification: string): Promise<boolean> {
+        const filter = { deviceIdentification }
         const device = await DeviceModel.deleteOne(filter).lean()
         return !!device.deletedCount
     }
