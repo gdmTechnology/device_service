@@ -1,5 +1,5 @@
 import { adaptRoute } from '@/main/adapters'
-import { makeCreateDeviceController, makeUpdateDeviceController, makeGetDeviceController, makeListDeviceController } from '@/main/factories'
+import { makeCreateDeviceController, makeUpdateDeviceController, makeGetDeviceController, makeListDeviceController, makeDeleteDeviceController } from '@/main/factories'
 
 import { Router } from 'express'
 import { auth } from '@/main/middlewares'
@@ -9,4 +9,5 @@ export default (router: Router): void => {
     router.put('/device', auth, adaptRoute(makeUpdateDeviceController()))
     router.get('/device/:deviceIdentification', auth, adaptRoute(makeGetDeviceController()))
     router.get('/device/list/:deviceTenantId', auth, adaptRoute(makeListDeviceController()))
+    router.delete('/device/:deviceIdentification', auth, adaptRoute(makeDeleteDeviceController()))
 }
