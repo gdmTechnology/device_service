@@ -6,7 +6,7 @@
     "start:dev": "npx nodemon src/main/server.ts",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js",
-    "test": "jest --detectOpenHandles --testEnvironment=node --runInBand --coverage --forceExit --coverageDirectory=output/coverage/jest"
+    "test": "jest --detectOpenHandles --testEnvironment=node --runInBand  --forceExit --coverage --coverageDirectory=output/coverage/jest"
   },
   "keywords": [],
   "author": "",
