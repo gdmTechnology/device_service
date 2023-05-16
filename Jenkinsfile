@@ -50,7 +50,7 @@ pipeline {
 					-e MONGO_USER=rem \
 					-p 3005:3005 \
 					--hostname device_service \
-                    --network rem-network \
+                    --network rem_network \
 					--restart always \
 					--name device_service device-service
 				'''
