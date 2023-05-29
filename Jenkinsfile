@@ -9,11 +9,11 @@ pipeline {
 				'''
 			}
 		}
-		stage('Tests') {
+		stage('tests') {
 			steps {
 				script {
 				sh 'npm i'
-				sh 'npm run test'
+				sh 'npm run test:ci'
 				}
 			}
 			post {
@@ -22,7 +22,27 @@ pipeline {
 				}
 			}
 		}
-		stage("build") {
+		stage("stop container") {
+			steps {
+				sh 'docker stop device_service || true'
+			}
+		}
+		stage("remove old image") {
+			steps {
+				sh 'docker rmi device-service || true'
+			}
+		}
+		stage("remove unused containers and images") {
+			steps {
+				sh 'docker system prune -af'
+			}
+		}
+		stage("build typescript") {
+			steps {
+				sh 'npm run build'
+			}
+		}
+		stage("build docker image") {
 			steps {
 				sh 'docker build -t device-service .'
 			}
