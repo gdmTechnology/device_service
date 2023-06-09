@@ -1,7 +1,7 @@
 import env from '@/main/config/env'
 import { Consumer } from '@/data/protocols'
 import { Kafka } from 'kafkajs'
-import { Topics } from '@/main/config/kafka'
+// import { Topics } from '@/main/config/kafka'
 import { } from '@/main/factories'
 
 export let consumer = null
