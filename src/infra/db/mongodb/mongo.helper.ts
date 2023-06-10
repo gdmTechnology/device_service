@@ -7,6 +7,7 @@ export const MongoHelper = {
 
   async connect(uri: string): Promise<void> {
     this.uri = uri
+    mongoose.set('strictQuery', false)
     this.client = await mongoose.connect(uri)
   },
 
